@@ -1,5 +1,6 @@
 package com.example.bunjang.service;
 
+import com.example.bunjang.config.Salt;
 import com.example.bunjang.entity.User;
 import com.example.bunjang.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void register(User user) {
+        String password = user.getPassword();
+        String salt = saltUtil.genSalt();
+        user.setSalt(new Salt(salt));
+        user.setPassword(saltUtil.encodePassword(salt,password));
         userRepository.save(user);
     }
 }
