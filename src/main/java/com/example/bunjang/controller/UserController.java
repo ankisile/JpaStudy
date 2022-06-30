@@ -20,7 +20,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping(value="")
-    public ResponseEntity<Long> register(@RequestBody RegisterReqDTO registerReqDTO){
+    public ResponseEntity<String> register(@RequestBody RegisterReqDTO registerReqDTO){
 
         log.info("---------reigster-----------");
         log.info(registerReqDTO);
