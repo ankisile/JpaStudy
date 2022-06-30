@@ -1,5 +1,6 @@
 package com.example.bunjang.entity;
 
+//import com.example.bunjang.config.Salt;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,5 +38,9 @@ public class User extends BaseEntity {
 
     @Column(columnDefinition = "varchar(10) default 'ACTIVE'")
     private String status;
+
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "salt_id")
+//    private Salt salt;
 
 }
