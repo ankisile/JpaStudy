@@ -2,16 +2,23 @@ package com.example.bunjang.service;
 
 //import com.example.bunjang.config.Salt;
 //import com.example.bunjang.config.SaltUtil;
+import com.example.bunjang.common.Role;
 import com.example.bunjang.dto.RegisterReqDTO;
 import com.example.bunjang.entity.User;
+import com.example.bunjang.exception.DuplicateMemberException;
 import com.example.bunjang.repository.UserRepository;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
+@Slf4j
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService{
 
     @Autowired
@@ -24,6 +31,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public void register(RegisterReqDTO registerReqDTO) {
 
+        if (userRepository.findByEmail(registerReqDTO.getEmail()).orElse(null) != null) {
+            throw new RuntimeException("이미 가입된 유저입니다.");
+        }
+
+        log.info(registerReqDTO.getPassword());
         String encodePassword = passwordEncoder.encode(registerReqDTO.getPassword());
 
         User user = User.builder()
@@ -32,9 +44,15 @@ public class UserServiceImpl implements UserService{
                 .phone(registerReqDTO.getPhoneNumber())
                 .userName(registerReqDTO.getUserName())
                 .point(0)
+                .activated(true)
+                .role(Role.ROLE_USER)
                 .build();
-        String password = user.getPassword();
 
         userRepository.save(user);
     }
+
+//    @Override
+//    public void login(String email) {
+//
+//    }
 }

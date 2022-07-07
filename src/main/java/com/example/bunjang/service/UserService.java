@@ -7,6 +7,6 @@ public interface UserService {
 
     void register(RegisterReqDTO registerReqDTO);
 
-
+//    void login(String email);
 
 }
