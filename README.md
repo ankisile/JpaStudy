@@ -18,9 +18,16 @@
 #### 7/18
 1. Product Entity 제작 => Product와 User는 다대일(user한명이 여러개 product 등록 가능. 일대다는 권장되지 않음)
 2. Product 등록용 dto 작성
+#### 7/21
+1. ProductRepository & ProductService 작성완료
+
+##### 빌더 패턴을 사용하는 이유
+
 
 ##### 참고문서
 - https://velog.io/@ehdrms2034/Spring-비밀번호-암호화에-대한-고찰
 - https://mia-dahae.tistory.com/120
 - https://inf.run/8sE2
 - https://hyeonic.tistory.com/219
+- https://velog.io/@sonaky47/Spring-Security-Jwt-토큰정보로-필터링-된-유저정보를-컨트롤러단에서-AuthenticationPricipal-어노테이션을-통해-가져오는법
+- https://minholee93.tistory.com/entry/Spring-Security-JWT-Security-Spring-Boot-10
