@@ -6,6 +6,7 @@ import com.example.bunjang.dto.TokenDTO;
 import com.example.bunjang.jwt.JwtFilter;
 import com.example.bunjang.jwt.TokenProvider;
 import com.example.bunjang.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
@@ -15,10 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -31,6 +29,7 @@ public class UserController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
+    @Operation(summary = "register", description = "회원가입")
     @PostMapping(value="/register")
     public ResponseEntity<String> register(@RequestBody RegisterReqDTO registerReqDTO){
 
@@ -48,7 +47,7 @@ public class UserController {
         log.info("----------login--------------");
         log.info(loginDTO);
 
-  // username, password를 파라미터로 받고 이를 이용해 UsernamePasswordAuthenticationToken을 생성
+        // username, password를 파라미터로 받고 이를 이용해 UsernamePasswordAuthenticationToken을 생성
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
 
@@ -61,6 +60,12 @@ public class UserController {
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
         return new ResponseEntity<>(new TokenDTO(jwt), httpHeaders, HttpStatus.OK);
+    }
+
+    //사용자 info => 내 정보 가져오기
+    @GetMapping("/users/info")
+    public ResponseEntity<?> getMyInfo() {
+        return ResponseEntity.ok(userService.findUserInfo());
     }
 
 }

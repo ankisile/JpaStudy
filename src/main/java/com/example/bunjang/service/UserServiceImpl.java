@@ -3,10 +3,13 @@ package com.example.bunjang.service;
 //import com.example.bunjang.config.Salt;
 //import com.example.bunjang.config.SaltUtil;
 import com.example.bunjang.common.Role;
+import com.example.bunjang.dto.LoginDTO;
 import com.example.bunjang.dto.RegisterReqDTO;
+import com.example.bunjang.dto.UserResDTO;
 import com.example.bunjang.entity.User;
 import com.example.bunjang.exception.DuplicateMemberException;
 import com.example.bunjang.repository.UserRepository;
+import com.example.bunjang.util.SecurityUtil;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,8 +54,14 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
     }
 
-//    @Override
-//    public void login(String email) {
-//
-//    }
+    public UserResDTO findUserInfo() {
+        String email = SecurityUtil.getCurrentEmail().orElseThrow(() ->
+                new RuntimeException("Security Context에 인증 정보가 없습니다."));
+
+        return userRepository.findByEmail(email)
+                .map(user -> new UserResDTO(user))
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 user 입니다. email=" + email));
+    }
+
+
 }

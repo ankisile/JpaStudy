@@ -20,6 +20,12 @@
 2. Product 등록용 dto 작성
 #### 7/21
 1. ProductRepository & ProductService 작성완료
+2. 토큰 받아서 사용자 정보 띄워주기 완료
+
+##### Have To
+1. 스웨거 적용 필요
+3. S3 공부 필요
+
 
 ##### 빌더 패턴을 사용하는 이유
 
@@ -29,5 +35,5 @@
 - https://mia-dahae.tistory.com/120
 - https://inf.run/8sE2
 - https://hyeonic.tistory.com/219
-- https://velog.io/@sonaky47/Spring-Security-Jwt-토큰정보로-필터링-된-유저정보를-컨트롤러단에서-AuthenticationPricipal-어노테이션을-통해-가져오는법
 - https://minholee93.tistory.com/entry/Spring-Security-JWT-Security-Spring-Boot-10
+- https://velog.io/@jeong-god/Spring-boot-Swagger-API-연동하기
